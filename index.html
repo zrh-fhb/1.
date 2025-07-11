@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>天天开红包</title>
+  <style>
+    body {
+      margin: 0;
+      background: #ff4865;
+      font-family: Arial, sans-serif;
+    }
+    .main-img {
+      width: 100%;
+      max-width: 600px;
+      display: block;
+      margin: 0 auto;
+    }
+    .copy-btn {
+      position: absolute;
+      width: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: pulse 0.7s infinite;
+      z-index: 10;
+    }
+    @keyframes pulse {
+      0%   { transform: scale(1) translateX(-50%); }
+      50%  { transform: scale(1.15) translateX(-43%); }
+      100% { transform: scale(1) translateX(-50%); }
+    }
+    .tips {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.7);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      display: none;
+      z-index: 9999;
+    }
+  </style>
+</head>
+<body>
+  <!-- 主图 -->
+  <img src="https://crm.shenquanwaimai.com/resource/image/crmapi/shangou1.png" class="main-img" />
+
+  <!-- 一键复制按钮 -->
+  <img id="copyBtn" class="copy-btn"
+       src="https://crm.shenquanwaimai.com/resource/image/crmapi/shangou2.png"
+       data-clipboard-text="￥NCHPVwW2Q7m￥/ HU7405" />
+
+  <!-- 成功提示 -->
+  <div id="tips" class="tips">口令复制成功！请打开「淘宝App」查看</div>
+
+  <!-- ClipboardJS CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script>
+  <script>
+    const copyBtn = document.getElementById("copyBtn");
+    const tips = document.getElementById("tips");
+
+    // 设置复制按钮位置随屏幕自适应
+    function updatePosition() {
+      const width = Math.min(window.innerWidth, 600);
+      const top = width * 580 / 400; // 等比定位
+      copyBtn.style.top = top + "px";
+    }
+
+    window.addEventListener("resize", updatePosition);
+    updatePosition();
+
+    // 初始化复制逻辑
+    const clipboard = new ClipboardJS(copyBtn, {
+      text: function() {
+        setTimeout(() => {
+          window.location.href = "https://ace.tb.cn/t?smburl=tbopen%3A%2F%2Fm.taobao.com%2Ftbopen%2Findex.html%3Fh5Url%3D";
+        }, 300);
+        return copyBtn.getAttribute("data-clipboard-text");
+      }
+    });
+
+    clipboard.on("success", () => {
+      tips.style.display = "block";
+      setTimeout(() => {
+        tips.style.display = "none";
+      }, 3000);
+    });
+
+    clipboard.on("error", () => {
+      tips.textContent = "复制失败，请手动复制口令";
+      tips.style.display = "block";
+      setTimeout(() => {
+        tips.style.display = "none";
+      }, 3000);
+    });
+  </script>
+</body>
+</html>
